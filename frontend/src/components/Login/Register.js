@@ -193,8 +193,6 @@ const Login = () => {
                   Show Password
                 </Checkbox>
                 <br />
-                {/* <a className="forget-text">Forgot password?</a> */}
-                {/* <PasswordResetRequest /> */}
                 <div className="btn-wrap">
                   <center>
                     {isError && (
