@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
 
 const UserSchema = new Schema({
     userName: {
@@ -21,8 +20,6 @@ const UserSchema = new Schema({
         select: false,
         minlength: 6 //minimum password length is 6
     },
-    resetPasswordToken :String,
-    resetPasswordExpire:Date
 })
 
 //this is for register route
@@ -44,16 +41,6 @@ UserSchema.methods.matchPasswords = async function(password){
 //for register json web token (JWT)
 UserSchema.methods.getSignedToken = function(){
     return jwt.sign({id : this._id} , process.env.JWT_SECRET , {expiresIn : process.env.JWT_EXPIRE} );
-}
-
-//for reset json web token
-UserSchema.methods.getResetPasswordToken = function(){
-    const resetToken = crypto.randomBytes(20).toString("hex");
-
-    this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
-
-    this.resetPasswordExpire = Date.now() + 10 * (60 * 1000);
-    return resetToken;
 }
 
 const User = mongoose.model("user", UserSchema);

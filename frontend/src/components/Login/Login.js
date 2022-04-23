@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Row,
   Col,
@@ -32,32 +32,6 @@ const Login = () => {
 
   const history = useNavigate();
 
-  //   useEffect(() => {
-  //     if (localStorage.getItem("authToken")) {
-  //       //push a user if he already logged in
-  //       if (
-  //         window.confirm(
-  //           "You are already logged in ! Are you sure you want to proceed?"
-  //         )
-  //       ) {
-  //         history(`/dashboard/${localStorage.getItem("username")}`); // if true navigate to the dashboard
-  //         window.location.reload();
-  //       } else {
-  //         if (window.confirm("Do you need to signout ?")) {
-  //           //if true clear the brower caching and signout
-  //           localStorage.removeItem("authToken");
-  //           localStorage.removeItem("username");
-  //           localStorage.removeItem("email");
-  //           history("/login");
-  //           alert("You are successfully signed out");
-  //         } else {
-  //           history(`/dashboard/${localStorage.getItem("username")}`); //else redirect to the dashboard
-  //           window.location.reload();
-  //         }
-  //       }
-  //     }
-  //   }, []);
-
   const loginHandler = async (e) => {
     //handler method for login
 
@@ -79,14 +53,13 @@ const Login = () => {
 
       localStorage.setItem("authToken", data.token); //set the browser caching or local storage for globally accessed anywhere in the application
       localStorage.setItem("username", data.username);
-      //   localStorage.setItem("type", data?.type);
-      //   localStorage.setItem("id", data?.empId);
-      //   localStorage.setItem("initials", data?.nameWithInitials);
 
       setTimeout(() => {
         // set a 5seconds timeout for authentication
         setLoading(false);
-        history(`/events/${localStorage.getItem("username")}`);
+        history(
+          `/dashboard/${localStorage.getItem("username")}/events`
+        );
         window.location.reload();
       }, 5000);
     } catch (error) {
@@ -176,8 +149,6 @@ const Login = () => {
                 />
                 <Checkbox onClick={showPassword}>Show Password</Checkbox>
                 <br /> <br />
-                {/* <a className="forget-text">Forgot password?</a> */}
-                {/* <PasswordResetRequest /> */}
                 <div className="btn-wrap">
                   <center>
                     {isError && (
@@ -209,7 +180,9 @@ const Login = () => {
                       </Button>
                     )}
                     <Link to={"/register"}>
-                      <a className="forget-text">Create your Account if you haven't?</a>
+                      <a className="forget-text">
+                        Create your Account if you haven't?
+                      </a>
                     </Link>
                   </center>
                 </div>

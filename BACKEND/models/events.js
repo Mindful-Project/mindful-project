@@ -23,7 +23,7 @@ const Events = new Schema ({
         required: [true, "Please enter a seat number"]
     },
     ePrice: {
-        type: Number,
+        type: String,
         required: [true, "Please enter an event price"]
     },
 });

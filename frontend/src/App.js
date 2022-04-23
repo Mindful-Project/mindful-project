@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Register from "./components/Login/Register";
 import "./App.css";
 import PrivateRoute from "./components/routes/PrivateRoute";
-import Events from "./components/Events/Events";
-import Navbar from "./common/Navbar";
+import Dashboard from "./common/Dashboard";
+
 
 const App = () => {
   return (
@@ -15,11 +15,10 @@ const App = () => {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
-            path="/events/:name"
+            path="/dashboard/:name/events"
             element={
               <PrivateRoute>
-                <Navbar />
-                <Events />
+                <Dashboard />
               </PrivateRoute>
             }
           />
